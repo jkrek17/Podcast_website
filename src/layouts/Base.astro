@@ -1,4 +1,5 @@
 ---
+import { url } from '../lib/url';
 import '@fontsource-variable/fraunces';
 import '@fontsource-variable/source-sans-3';
 import '../styles/global.css';
@@ -12,9 +13,9 @@ const { title, description = site.description } = Astro.props;
 const fullTitle = title ? `${title} · ${site.name}` : `${site.name} · ${site.tagline}`;
 const path = Astro.url.pathname;
 const links = [
-  { href: '/episodes/', label: 'Episodes' },
-  { href: '/about/', label: 'About' },
-  { href: '/contact/', label: 'Contact' },
+  { href: url('/episodes/'), label: 'Episodes' },
+  { href: url('/about/'), label: 'About' },
+  { href: url('/contact/'), label: 'Contact' },
 ];
 ---
 <!doctype html>
@@ -26,8 +27,8 @@ const links = [
     <meta name="description" content={description} />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={new URL('/artwork.svg', Astro.site)} />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta property="og:image" content={new URL(url('/artwork.svg'), Astro.site)} />
+    <link rel="icon" href={url('/favicon.svg')} type="image/svg+xml" />
   </head>
   <body>
     <a class="skip" href="#main">Skip to content</a>
@@ -36,15 +37,15 @@ const links = [
     )}
     <header class="site-header">
       <div class="wrap">
-        <a class="brand" href="/">
-          <img src="/favicon.svg" alt="" width="36" height="36" />
+        <a class="brand" href={url('/')}>
+          <img src={url('/favicon.svg')} alt="" width="36" height="36" />
           {site.name}
         </a>
         <nav class="nav" aria-label="Main">
           {links.map((l) => (
             <a href={l.href} aria-current={path.startsWith(l.href) ? 'page' : undefined}>{l.label}</a>
           ))}
-          <a class="btn btn-primary" href="/#listen">Listen</a>
+          <a class="btn btn-primary" href={url('/#listen')}>Listen</a>
         </nav>
       </div>
     </header>
@@ -72,7 +73,7 @@ const links = [
             <h2>Contact</h2>
             <ul>
               <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
-              <li><a href="/contact/">Guest and sponsor inquiries</a></li>
+              <li><a href={url('/contact/')}>Guest and sponsor inquiries</a></li>
             </ul>
           </div>
         </div>

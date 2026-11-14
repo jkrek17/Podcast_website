@@ -2,6 +2,7 @@ import { XMLParser } from 'fast-xml-parser';
 import sanitizeHtml from 'sanitize-html';
 import sampleFeed from '../data/sample-feed.xml?raw';
 import { site } from '../config';
+import { url } from './url';
 
 export interface Episode {
   slug: string;
@@ -77,7 +78,7 @@ async function load(): Promise<Episode[]> {
       duration: formatDuration(text(item['itunes:duration'])),
       summary: summary.length > 220 ? summary.slice(0, 217).trimEnd() + '…' : summary,
       notesHtml: sanitizeHtml(rawNotes),
-      audioUrl: item.enclosure?.['@_url'] ?? null,
+      audioUrl: item.enclosure?.['@_url'] ? url(item.enclosure['@_url']) : null,
       audioType: item.enclosure?.['@_type'] ?? null,
       image: item['itunes:image']?.['@_href'] ?? null,
     };

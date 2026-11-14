@@ -1,4 +1,5 @@
 ---
+import { url } from '../../lib/url';
 import Base from '../../layouts/Base.astro';
 import EpisodeCard from '../../components/EpisodeCard.astro';
 import Player from '../../components/Player.astro';
@@ -20,7 +21,7 @@ const { episode, related } = Astro.props;
 <Base title={episode.title} description={episode.summary}>
   <div class="wrap">
     <header class="page-head">
-      <p class="eyebrow"><a href="/episodes/">← All episodes</a></p>
+      <p class="eyebrow"><a href={url('/episodes/')}>← All episodes</a></p>
       <h1>{episode.title}</h1>
       <p class="meta">
         {episode.number && <>Episode {episode.number} · </>}
