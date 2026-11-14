@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Placeholder feed with invented episodes. Used only while site.feedUrl is empty. -->
+<rss version="2.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Beyond the Trailhead</title>
+    <link>https://example.com</link>
+    <description>Placeholder feed for the test site.</description>
+    <item>
+      <title>When to Stay and When to Go: The Evacuation Decision</title>
+      <itunes:episode>6</itunes:episode>
+      <pubDate>Mon, 09 Nov 2026 08:00:00 GMT</pubDate>
+      <itunes:duration>2710</itunes:duration>
+      <guid isPermaLink="false">sample-6</guid>
+      <enclosure url="/sample-audio.wav" type="audio/wav" length="96044"/>
+      <description>The hardest call in the backcountry is rarely the treatment. It is deciding whether to walk out, wait, or call for help.</description>
+      <content:encoded><![CDATA[<p>The hardest call in the backcountry is rarely the treatment. It is deciding whether to walk out, wait, or call for help.</p><p>In this placeholder episode we talk through how experienced trip leaders frame that decision.</p><h3>In this episode</h3><ul><li>Sorting problems into "getting better", "staying the same" and "getting worse"</li><li>What a rescue team needs to hear from you</li><li>Why the plan you made at home matters most</li></ul><p>Sample show notes. Real notes will come from the podcast feed.</p>]]></content:encoded>
+    </item>
+    <item>
+      <title>Thunder on the Ridge: Lightning Safety</title>
+      <itunes:episode>5</itunes:episode>
+      <pubDate>Mon, 26 Oct 2026 08:00:00 GMT</pubDate>
+      <itunes:duration>38:15</itunes:duration>
+      <guid isPermaLink="false">sample-5</guid>
+      <enclosure url="/sample-audio.wav" type="audio/wav" length="96044"/>
+      <description>Afternoon storms, exposed terrain and a group that wants the summit. How to plan around lightning and what to do when the plan fails.</description>
+      <content:encoded><![CDATA[<p>Afternoon storms, exposed terrain and a group that wants the summit. How to plan around lightning and what to do when the plan fails.</p><p>Sample show notes. Real notes will come from the podcast feed.</p>]]></content:encoded>
+    </item>
+    <item>
+      <title>Thin Air: Recognising Altitude Illness Early</title>
+      <itunes:episode>4</itunes:episode>
+      <pubDate>Mon, 12 Oct 2026 08:00:00 GMT</pubDate>
+      <itunes:duration>51:02</itunes:duration>
+      <guid isPermaLink="false">sample-4</guid>
+      <enclosure url="/sample-audio.wav" type="audio/wav" length="96044"/>
+      <description>A headache at 3,500 metres might be nothing. A guest who has spent years on high peaks explains the signs that mean it is time to descend.</description>
+      <content:encoded><![CDATA[<p>A headache at 3,500 metres might be nothing. A guest who has spent years on high peaks explains the signs that mean it is time to descend.</p><p>Sample show notes. Real notes will come from the podcast feed.</p>]]></content:encoded>
+    </item>
+    <item>
+      <title>Sticks, Straps and Sleeping Pads: Improvised Splinting</title>
+      <itunes:episode>3</itunes:episode>
+      <pubDate>Mon, 28 Sep 2026 08:00:00 GMT</pubDate>
+      <itunes:duration>44:40</itunes:duration>
+      <guid isPermaLink="false">sample-3</guid>
+      <enclosure url="/sample-audio.wav" type="audio/wav" length="96044"/>
+      <description>Your first aid kit is smaller than you would like. We look at what is already in your pack that can stabilise an injured limb.</description>
+      <content:encoded><![CDATA[<p>Your first aid kit is smaller than you would like. We look at what is already in your pack that can stabilise an injured limb.</p><p>Sample show notes. Real notes will come from the podcast feed.</p>]]></content:encoded>
+    </item>
+    <item>
+      <title>Snakebite: Sorting Myths From Medicine</title>
+      <itunes:episode>2</itunes:episode>
+      <pubDate>Mon, 14 Sep 2026 08:00:00 GMT</pubDate>
+      <itunes:duration>35:27</itunes:duration>
+      <guid isPermaLink="false">sample-2</guid>
+      <enclosure url="/sample-audio.wav" type="audio/wav" length="96044"/>
+      <description>Almost everything the movies taught you is wrong. A conversation about what actually helps after a bite, and what makes things worse.</description>
+      <content:encoded><![CDATA[<p>Almost everything the movies taught you is wrong. A conversation about what actually helps after a bite, and what makes things worse.</p><p>Sample show notes. Real notes will come from the podcast feed.</p>]]></content:encoded>
+    </item>
+    <item>
+      <title>Cold, Wet and Far From the Car: Hypothermia</title>
+      <itunes:episode>1</itunes:episode>
+      <pubDate>Mon, 31 Aug 2026 08:00:00 GMT</pubDate>
+      <itunes:duration>47:53</itunes:duration>
+      <guid isPermaLink="false">sample-1</guid>
+      <enclosure url="/sample-audio.wav" type="audio/wav" length="96044"/>
+      <description>Our first episode starts with the classic backcountry problem: how people get cold, how to spot it early, and how to turn it around.</description>
+      <content:encoded><![CDATA[<p>Our first episode starts with the classic backcountry problem: how people get cold, how to spot it early, and how to turn it around.</p><p>Sample show notes. Real notes will come from the podcast feed.</p>]]></content:encoded>
+    </item>
+  </channel>
+</rss>

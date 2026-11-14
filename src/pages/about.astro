@@ -1,0 +1,48 @@
+---
+import Base from '../layouts/Base.astro';
+import { site } from '../config';
+---
+<Base title="About" description={`The story behind ${site.name} and the people who make it.`}>
+  <div class="wrap">
+    <header class="page-head">
+      <p class="eyebrow">About the show</p>
+      <h1>Medicine for when help is hours away.</h1>
+      <p class="lede">{site.description}</p>
+    </header>
+
+    <section class="prose">
+      <h2>Our story</h2>
+      <p>
+        This is placeholder text for the show's story: why the hosts started it, who it is for,
+        and what a listener can expect from each episode.
+      </p>
+      <p>
+        A second paragraph can cover the format: interviews, case reviews, gear and kit
+        discussions, and how often new episodes are released.
+      </p>
+    </section>
+
+    <section class="section" style="margin-top: 3rem">
+      <h2>The hosts</h2>
+      <div class="hosts">
+        {site.hosts.map((h) => (
+          <div class="host host-full">
+            <div class="avatar" aria-hidden="true">{h.name.split(' ').map((w) => w[0]).join('')}</div>
+            <div>
+              <h3>{h.name}</h3>
+              <p class="meta">{h.role}</p>
+              <p>{h.bio}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="prose">
+        <h2>A note on medical advice</h2>
+        <p>{site.disclaimer}</p>
+      </div>
+    </section>
+  </div>
+</Base>
