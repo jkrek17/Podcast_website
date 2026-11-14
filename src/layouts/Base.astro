@@ -3,6 +3,8 @@ import { url } from '../lib/url';
 import '@fontsource-variable/fraunces';
 import '@fontsource-variable/source-sans-3';
 import '../styles/global.css';
+import { ClientRouter } from 'astro:transitions';
+import PlayerBar from '../components/PlayerBar.astro';
 import { site } from '../config';
 
 interface Props {
@@ -12,28 +14,35 @@ interface Props {
 const { title, description = site.description } = Astro.props;
 const fullTitle = title ? `${title} · ${site.name}` : `${site.name} · ${site.tagline}`;
 const path = Astro.url.pathname;
+const home = url('/');
 const links = [
-  { href: url('/episodes/'), label: 'Episodes' },
-  { href: url('/about/'), label: 'About' },
-  { href: url('/contact/'), label: 'Contact' },
+  { href: url('/episodes/'), label: 'Episodes', icon: 'M4 6h16M4 12h16M4 18h10' },
+  { href: url('/about/'), label: 'About', icon: 'M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm-7 10a7 7 0 0 1 14 0' },
+  { href: url('/contact/'), label: 'Contact', icon: 'M3 6h18v12H3zm0 1 9 6 9-6' },
 ];
+const tabs = [{ href: home, label: 'Home', icon: 'M3 11 12 3l9 8M5 9.5V21h14V9.5' }, ...links];
+const isCurrent = (href: string) => (href === home ? path === home : path.startsWith(href));
 ---
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#1d3026" />
+    <meta name="application-name" content={site.name} />
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={new URL(url('/artwork.svg'), Astro.site)} />
+    <noscript><style>[data-play] { display: none; }</style></noscript>
+    <ClientRouter />
     <link rel="icon" href={url('/favicon.svg')} type="image/svg+xml" />
   </head>
   <body>
     <a class="skip" href="#main">Skip to content</a>
     {site.isPlaceholder && (
-      <div class="banner">Test site: the show name, hosts and episodes are placeholders.</div>
+      <div class="banner">Test site with placeholder content</div>
     )}
     <header class="site-header">
       <div class="wrap">
@@ -43,7 +52,7 @@ const links = [
         </a>
         <nav class="nav" aria-label="Main">
           {links.map((l) => (
-            <a href={l.href} aria-current={path.startsWith(l.href) ? 'page' : undefined}>{l.label}</a>
+            <a class="nav-link" href={l.href} aria-current={isCurrent(l.href) ? 'page' : undefined}>{l.label}</a>
           ))}
           <a class="btn btn-primary" href={url('/#listen')}>Listen</a>
         </nav>
@@ -83,5 +92,16 @@ const links = [
         </div>
       </div>
     </footer>
+
+    <PlayerBar />
+
+    <nav class="tabbar" aria-label="Sections">
+      {tabs.map((t) => (
+        <a href={t.href} aria-current={isCurrent(t.href) ? 'page' : undefined}>
+          <svg aria-hidden="true" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d={t.icon} /></svg>
+          {t.label}
+        </a>
+      ))}
+    </nav>
   </body>
 </html>

@@ -2,7 +2,7 @@
 import { url } from '../../lib/url';
 import Base from '../../layouts/Base.astro';
 import EpisodeCard from '../../components/EpisodeCard.astro';
-import Player from '../../components/Player.astro';
+import PlayButton from '../../components/PlayButton.astro';
 import ListenLinks from '../../components/ListenLinks.astro';
 import { getEpisodes, formatDate, type Episode } from '../../lib/feed';
 
@@ -28,7 +28,7 @@ const { episode, related } = Astro.props;
         <time datetime={episode.date.toISOString()}>{formatDate(episode.date)}</time>
         {episode.duration && <> · {episode.duration}</>}
       </p>
-      <Player episode={episode} />
+      <PlayButton episode={episode} />
     </header>
 
     <section class="prose" aria-label="Show notes">
