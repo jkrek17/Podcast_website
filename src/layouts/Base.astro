@@ -27,7 +27,7 @@ const isCurrent = (href: string) => (href === home ? path === home : path.starts
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#1d3026" />
     <meta name="application-name" content={site.name} />
     <title>{fullTitle}</title>
@@ -95,13 +95,28 @@ const isCurrent = (href: string) => (href === home ? path === home : path.starts
 
     <PlayerBar />
 
-    <nav class="tabbar" aria-label="Sections">
+    {/* Kept alive across page changes (like the player), so phones never
+        have to rebuild it; the script below moves the highlight. */}
+    <nav id="tabbar" class="tabbar" aria-label="Sections" transition:persist>
       {tabs.map((t) => (
-        <a href={t.href} aria-current={isCurrent(t.href) ? 'page' : undefined}>
+        <a href={t.href} data-exact={t.href === home ? '' : undefined} aria-current={isCurrent(t.href) ? 'page' : undefined}>
           <svg aria-hidden="true" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d={t.icon} /></svg>
           {t.label}
         </a>
       ))}
     </nav>
+    <script>
+      function markTab() {
+        const path = location.pathname;
+        document.querySelectorAll<HTMLAnchorElement>('#tabbar a').forEach((a) => {
+          const href = new URL(a.href).pathname;
+          const on = a.hasAttribute('data-exact') ? path === href : path.startsWith(href);
+          if (on) a.setAttribute('aria-current', 'page');
+          else a.removeAttribute('aria-current');
+        });
+      }
+      document.addEventListener('astro:after-swap', markTab);
+      document.addEventListener('astro:page-load', markTab);
+    </script>
   </body>
 </html>
