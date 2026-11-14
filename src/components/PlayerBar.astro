@@ -1,0 +1,92 @@
+---
+// The site-wide player. It is kept alive across page changes
+// (transition:persist), so audio keeps playing while visitors browse.
+---
+<div id="player-bar" class="player-bar" role="region" aria-label="Audio player" hidden transition:persist>
+  <audio preload="metadata"></audio>
+  <input class="pb-seek" type="range" min="0" max="100" step="0.1" value="0" aria-label="Seek" />
+  <div class="pb-row">
+    <button type="button" class="pb-btn pb-main" data-toggle aria-label="Play">
+      <svg class="when-paused" aria-hidden="true" viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7 4.5v15l13-7.5z" /></svg>
+      <svg class="when-playing" aria-hidden="true" viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M6 4.5h4.5v15H6zm7.5 0H18v15h-4.5z" /></svg>
+    </button>
+    <div class="pb-info">
+      <a class="pb-title" href="#"></a>
+      <span class="pb-time">0:00 / 0:00</span>
+    </div>
+    <button type="button" class="pb-btn" data-skip="-15" aria-label="Back 15 seconds">−15</button>
+    <button type="button" class="pb-btn" data-skip="30" aria-label="Forward 30 seconds">+30</button>
+  </div>
+</div>
+
+<script>
+  const bar = document.getElementById('player-bar')!;
+  const audio = bar.querySelector('audio')!;
+  const seek = bar.querySelector<HTMLInputElement>('.pb-seek')!;
+  const toggle = bar.querySelector<HTMLButtonElement>('[data-toggle]')!;
+  const title = bar.querySelector<HTMLAnchorElement>('.pb-title')!;
+  const time = bar.querySelector<HTMLElement>('.pb-time')!;
+  let current = '';
+
+  const fmt = (s: number) =>
+    Number.isFinite(s) ? `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, '0')}` : '0:00';
+
+  function sync() {
+    const playing = !audio.paused;
+    document.querySelectorAll<HTMLElement>('[data-play]').forEach((b) => {
+      const on = playing && b.dataset.src === current;
+      b.classList.toggle('is-playing', on);
+      b.setAttribute('aria-pressed', String(on));
+    });
+    bar.classList.toggle('is-playing', playing);
+    toggle.setAttribute('aria-label', playing ? 'Pause' : 'Play');
+    document.documentElement.classList.toggle('has-player', !bar.hidden);
+  }
+
+  function tick() {
+    const d = audio.duration;
+    seek.value = Number.isFinite(d) && d > 0 ? String((audio.currentTime / d) * 100) : '0';
+    time.textContent = `${fmt(audio.currentTime)} / ${fmt(d)}`;
+    seek.setAttribute('aria-valuetext', time.textContent);
+  }
+
+  function load(b: HTMLElement) {
+    current = b.dataset.src!;
+    audio.src = current;
+    title.textContent = b.dataset.title ?? '';
+    title.href = b.dataset.href ?? '#';
+    bar.hidden = false;
+    if ('mediaSession' in navigator) {
+      navigator.mediaSession.metadata = new MediaMetadata({
+        title: b.dataset.title,
+        artist: document.querySelector<HTMLMetaElement>('meta[name="application-name"]')?.content,
+      });
+    }
+    tick();
+  }
+
+  // Delegated, so it keeps working for buttons on pages loaded later.
+  document.addEventListener('click', (e) => {
+    const b = (e.target as Element).closest<HTMLElement>('[data-play]');
+    if (!b) return;
+    if (b.dataset.src !== current) load(b);
+    if (audio.paused) audio.play();
+    else audio.pause();
+  });
+
+  toggle.addEventListener('click', () => (audio.paused ? audio.play() : audio.pause()));
+  bar.querySelectorAll<HTMLElement>('[data-skip]').forEach((b) =>
+    b.addEventListener('click', () => {
+      audio.currentTime = Math.max(0, audio.currentTime + Number(b.dataset.skip));
+    }),
+  );
+  seek.addEventListener('input', () => {
+    if (Number.isFinite(audio.duration)) audio.currentTime = (Number(seek.value) / 100) * audio.duration;
+  });
+
+  for (const ev of ['play', 'pause', 'ended']) audio.addEventListener(ev, sync);
+  for (const ev of ['timeupdate', 'durationchange', 'seeked']) audio.addEventListener(ev, tick);
+  // Page changes replace the buttons and reset <html> classes; restore both.
+  document.addEventListener('astro:after-swap', sync);
+  document.addEventListener('astro:page-load', sync);
+</script>
