@@ -1,0 +1,14 @@
+---
+import { formatDate, type Episode } from '../lib/feed';
+interface Props { episode: Episode }
+const { episode } = Astro.props;
+---
+<article class="card">
+  {episode.number && <p class="ep-num">Episode {episode.number}</p>}
+  <h3><a href={`/episodes/${episode.slug}/`}>{episode.title}</a></h3>
+  <p class="meta">
+    <time datetime={episode.date.toISOString()}>{formatDate(episode.date)}</time>
+    {episode.duration && <> · {episode.duration}</>}
+  </p>
+  <p class="summary">{episode.summary}</p>
+</article>

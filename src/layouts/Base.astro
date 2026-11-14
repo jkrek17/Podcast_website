@@ -1,0 +1,86 @@
+---
+import '@fontsource-variable/fraunces';
+import '@fontsource-variable/source-sans-3';
+import '../styles/global.css';
+import { site } from '../config';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+const { title, description = site.description } = Astro.props;
+const fullTitle = title ? `${title} · ${site.name}` : `${site.name} · ${site.tagline}`;
+const path = Astro.url.pathname;
+const links = [
+  { href: '/episodes/', label: 'Episodes' },
+  { href: '/about/', label: 'About' },
+  { href: '/contact/', label: 'Contact' },
+];
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL('/artwork.svg', Astro.site)} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    {site.isPlaceholder && (
+      <div class="banner">Test site: the show name, hosts and episodes are placeholders.</div>
+    )}
+    <header class="site-header">
+      <div class="wrap">
+        <a class="brand" href="/">
+          <img src="/favicon.svg" alt="" width="36" height="36" />
+          {site.name}
+        </a>
+        <nav class="nav" aria-label="Main">
+          {links.map((l) => (
+            <a href={l.href} aria-current={path.startsWith(l.href) ? 'page' : undefined}>{l.label}</a>
+          ))}
+          <a class="btn btn-primary" href="/#listen">Listen</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap">
+        <div class="footer-cols">
+          <div>
+            <h2>Listen</h2>
+            <ul>
+              {site.platforms.map((p) => <li><a href={p.url}>{p.name}</a></li>)}
+            </ul>
+          </div>
+          <div>
+            <h2>Follow</h2>
+            <ul>
+              {site.socials.map((s) => <li><a href={s.url}>{s.name}</a></li>)}
+            </ul>
+          </div>
+          <div>
+            <h2>Contact</h2>
+            <ul>
+              <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
+              <li><a href="/contact/">Guest and sponsor inquiries</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="fine">
+          <p>{site.disclaimer}</p>
+          <p>© {new Date().getFullYear()} {site.name}</p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

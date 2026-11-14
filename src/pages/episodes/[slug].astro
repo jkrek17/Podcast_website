@@ -1,0 +1,51 @@
+---
+import Base from '../../layouts/Base.astro';
+import EpisodeCard from '../../components/EpisodeCard.astro';
+import Player from '../../components/Player.astro';
+import ListenLinks from '../../components/ListenLinks.astro';
+import { getEpisodes, formatDate, type Episode } from '../../lib/feed';
+
+export async function getStaticPaths() {
+  const episodes = await getEpisodes();
+  return episodes.map((episode, i) => ({
+    params: { slug: episode.slug },
+    // "Related" = the neighbouring episodes in the archive.
+    props: { episode, related: [...episodes.slice(i + 1), ...episodes.slice(0, i)].slice(0, 3) },
+  }));
+}
+
+interface Props { episode: Episode; related: Episode[] }
+const { episode, related } = Astro.props;
+---
+<Base title={episode.title} description={episode.summary}>
+  <div class="wrap">
+    <header class="page-head">
+      <p class="eyebrow"><a href="/episodes/">← All episodes</a></p>
+      <h1>{episode.title}</h1>
+      <p class="meta">
+        {episode.number && <>Episode {episode.number} · </>}
+        <time datetime={episode.date.toISOString()}>{formatDate(episode.date)}</time>
+        {episode.duration && <> · {episode.duration}</>}
+      </p>
+      <Player episode={episode} />
+    </header>
+
+    <section class="prose" aria-label="Show notes">
+      <Fragment set:html={episode.notesHtml} />
+    </section>
+
+    <section class="section" style="margin-top: 3rem">
+      <h2>Listen in your app</h2>
+      <ListenLinks />
+    </section>
+
+    {related.length > 0 && (
+      <section class="section">
+        <h2>More episodes</h2>
+        <ul class="grid">
+          {related.map((e) => <li><EpisodeCard episode={e} /></li>)}
+        </ul>
+      </section>
+    )}
+  </div>
+</Base>

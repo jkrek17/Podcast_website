@@ -1,0 +1,39 @@
+---
+import Base from '../layouts/Base.astro';
+import { site } from '../config';
+---
+<Base title="Contact" description={`Get in touch with ${site.name}.`}>
+  <div class="wrap">
+    <header class="page-head">
+      <p class="eyebrow">Contact</p>
+      <h1>Get in touch</h1>
+      <p class="lede">Questions, corrections, story ideas and feedback are all welcome.</p>
+      <a class="btn btn-primary" href={`mailto:${site.email}`}>Email {site.email}</a>
+    </header>
+
+    <div class="contact-grid">
+      <section class="panel">
+        <h2>Be a guest</h2>
+        <p>
+          Work in wilderness medicine, search and rescue, or guiding? Tell us what you would like
+          to talk about and a little about your background.
+        </p>
+        <p><a href={`mailto:${site.email}?subject=Guest%20inquiry`}>Send a guest inquiry</a></p>
+      </section>
+      <section class="panel">
+        <h2>Sponsor the show</h2>
+        <p>
+          We work with organisations whose gear and training we would recommend anyway. Ask for
+          details about our audience and options.
+        </p>
+        <p><a href={`mailto:${site.email}?subject=Sponsorship%20inquiry`}>Send a sponsor inquiry</a></p>
+      </section>
+      <section class="panel">
+        <h2>Follow along</h2>
+        <ul class="chips">
+          {site.socials.map((s) => <li><a class="btn" href={s.url}>{s.name}</a></li>)}
+        </ul>
+      </section>
+    </div>
+  </div>
+</Base>

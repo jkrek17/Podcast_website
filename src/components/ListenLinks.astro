@@ -1,0 +1,6 @@
+---
+import { site } from '../config';
+---
+<ul class="chips">
+  {site.platforms.map((p) => <li><a class="btn" href={p.url}>{p.name}</a></li>)}
+</ul>

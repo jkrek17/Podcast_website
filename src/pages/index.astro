@@ -1,0 +1,92 @@
+---
+import Base from '../layouts/Base.astro';
+import EpisodeCard from '../components/EpisodeCard.astro';
+import Player from '../components/Player.astro';
+import ListenLinks from '../components/ListenLinks.astro';
+import { site } from '../config';
+import { getEpisodes, formatDate } from '../lib/feed';
+
+const episodes = await getEpisodes();
+const [latest, ...rest] = episodes;
+const recent = rest.slice(0, 3);
+---
+<Base>
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <p class="eyebrow">A wilderness medicine podcast</p>
+        <h1>{site.tagline}</h1>
+        <p class="lede">{site.description}</p>
+        <div class="btn-row">
+          <a class="btn btn-primary" href="#latest">▶ Play latest episode</a>
+          <a class="btn" href="/episodes/">Browse episodes</a>
+        </div>
+      </div>
+      <img class="hero-art" src="/artwork.svg" alt={`${site.name} podcast artwork`} width="600" height="600" />
+    </div>
+  </section>
+
+  {latest && (
+    <section class="section" id="latest">
+      <div class="wrap">
+        <p class="eyebrow">Latest episode</p>
+        <div class="featured">
+          <img src={latest.image ?? '/artwork.svg'} alt="" width="600" height="600" />
+          <div>
+            <h3><a href={`/episodes/${latest.slug}/`}>{latest.title}</a></h3>
+            <p class="meta">
+              {latest.number && <>Episode {latest.number} · </>}
+              <time datetime={latest.date.toISOString()}>{formatDate(latest.date)}</time>
+              {latest.duration && <> · {latest.duration}</>}
+            </p>
+            <p>{latest.summary}</p>
+            <Player episode={latest} />
+          </div>
+        </div>
+      </div>
+    </section>
+  )}
+
+  {recent.length > 0 && (
+    <section class="section">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>Recent episodes</h2>
+          <a class="more" href="/episodes/">All {episodes.length} episodes →</a>
+        </div>
+        <ul class="grid">
+          {recent.map((e) => <li><EpisodeCard episode={e} /></li>)}
+        </ul>
+      </div>
+    </section>
+  )}
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Meet the hosts</h2>
+        <a class="more" href="/about/">About the show →</a>
+      </div>
+      <div class="hosts">
+        {site.hosts.map((h) => (
+          <div class="host">
+            <div class="avatar" aria-hidden="true">{h.name.split(' ').map((w) => w[0]).join('')}</div>
+            <div>
+              <h3>{h.name}</h3>
+              <p class="meta">{h.role}</p>
+              <p>{h.short}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="listen">
+    <div class="wrap">
+      <h2>Listen wherever you are</h2>
+      <p class="lede">Download before you lose signal. New episodes appear here and in your podcast app.</p>
+      <ListenLinks />
+    </div>
+  </section>
+</Base>
