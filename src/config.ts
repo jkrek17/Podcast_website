@@ -2,7 +2,7 @@
 // All values below are placeholders until the real branding arrives.
 
 export const site = {
-  name: 'Beyond the Trailhead',
+  name: 'Docs in the Wild',
   isPlaceholder: true,
   tagline: 'Wilderness medicine for people who go far from help.',
   description:

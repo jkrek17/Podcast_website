@@ -1,7 +1,7 @@
 # Podcast website
 
-Test build of a wilderness medicine podcast website. The show name, hosts and
-episodes are placeholders until the real branding and feed arrive.
+Website for Docs in the Wild, a wilderness medicine podcast. The hosts and
+episodes are placeholders until the real bios and feed arrive.
 
 Built with [Astro](https://astro.build) as a fully static site, intended for
 Cloudflare hosting.
@@ -23,7 +23,7 @@ npm run build    # static site in dist/
 | RSS import | `src/lib/feed.ts` |
 | Colours, fonts, layout | `src/styles/global.css` |
 | Pages | `src/pages/` |
-| Artwork | `public/artwork.svg`, `public/favicon.svg` |
+| Logo and icons | `public/logo-*.webp`, `public/favicon.png`, `public/apple-touch-icon.png`, `public/og-image.jpg` |
 
 ## Switching to the real feed
 
