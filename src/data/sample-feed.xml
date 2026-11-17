@@ -2,7 +2,7 @@
 <!-- Placeholder feed with invented episodes. Used only while site.feedUrl is empty. -->
 <rss version="2.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>Beyond the Trailhead</title>
+    <title>Docs in the Wild</title>
     <link>https://example.com</link>
     <description>Placeholder feed for the test site.</description>
     <item>

@@ -23,7 +23,15 @@ const recent = rest.slice(0, 5);
           <a class="btn" href={url('/episodes/')}>Browse episodes</a>
         </div>
       </div>
-      <img class="hero-art" src={url('/artwork.svg')} alt={`${site.name} podcast artwork`} width="600" height="600" />
+      <img
+        class="hero-art"
+        src={url('/logo-640.webp')}
+        srcset={`${url('/logo-640.webp')} 640w, ${url('/logo-1200.webp')} 1200w`}
+        sizes="(max-width: 47.99rem) 7rem, 26rem"
+        alt={`${site.name} logo: a hiker and dog by a river below a snowy peak`}
+        width="640" height="640"
+        fetchpriority="high"
+      />
     </div>
   </section>
 
@@ -32,7 +40,7 @@ const recent = rest.slice(0, 5);
       <div class="wrap">
         <p class="eyebrow">Latest episode</p>
         <div class="featured">
-          <img src={latest.image ?? url('/artwork.svg')} alt="" width="600" height="600" />
+          <img src={latest.image ?? url('/logo-640.webp')} alt="" width="600" height="600" />
           <div>
             <h3><a href={url(`/episodes/${latest.slug}/`)}>{latest.title}</a></h3>
             <p class="meta">

@@ -28,16 +28,18 @@ const isCurrent = (href: string) => (href === home ? path === home : path.starts
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#1d3026" />
+    <meta name="theme-color" content="#06321f" />
     <meta name="application-name" content={site.name} />
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={new URL(url('/artwork.svg'), Astro.site)} />
+    <meta property="og:image" content={new URL(url('/og-image.jpg'), Astro.site)} />
+    <meta name="twitter:card" content="summary_large_image" />
     <noscript><style>[data-play] { display: none; }</style></noscript>
     <ClientRouter />
-    <link rel="icon" href={url('/favicon.svg')} type="image/svg+xml" />
+    <link rel="icon" href={url('/favicon.png')} type="image/png" />
+    <link rel="apple-touch-icon" href={url('/apple-touch-icon.png')} />
   </head>
   <body>
     <a class="skip" href="#main">Skip to content</a>
@@ -47,7 +49,7 @@ const isCurrent = (href: string) => (href === home ? path === home : path.starts
     <header class="site-header">
       <div class="wrap">
         <a class="brand" href={url('/')}>
-          <img src={url('/favicon.svg')} alt="" width="36" height="36" />
+          <img src={url('/logo-mark.png')} alt="" width="40" height="40" />
           {site.name}
         </a>
         <nav class="nav" aria-label="Main">
